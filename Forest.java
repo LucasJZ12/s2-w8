@@ -71,31 +71,30 @@ public class Forest {
         for(int r = 0; r< copy.length;r++){
             for(int c = 0; c<copy[0].length;c++){
                 if(copy[r][c].getState() == Tree.BURNING){
-                    copy[r][c].setBurnTime(copy[r][c].getBurnTime()+1);
-                    if(copy[r][c].getBurnTime()==burnDuration){
-                        copy[r][c].setState(Tree.EMPTY);
-                    }
-                    else{
-                        if(copy[r+1][c].getState() != Tree.BURNING){
+                    
+                        if(copy[r+1][c].getState() == Tree.TREE){
                         if(Math.random()*(1/burnRate) == 1){
                             copy[r+1][c].setState(Tree.BURNING);
                         }
                         }
-                        if(copy[r-1][c].getState() != Tree.BURNING){
+                        if(copy[r-1][c].getState() == Tree.TREE){
                             if(Math.random()*(1/burnRate) == 1){
                                 copy[r+1][c].setState(Tree.BURNING);
                             }
                         }
-                        if(copy[r][c+1].getState() != Tree.BURNING){
+                        if(copy[r][c+1].getState() == Tree.TREE){
                             if(Math.random()*(1/burnRate) == 1){
                                 copy[r+1][c].setState(Tree.BURNING);
                             }
                         }
-                        if(copy[r][c-1].getState() != Tree.BURNING){
+                        if(copy[r][c-1].getState() == Tree.TREE){
                             if(Math.random()*(1/burnRate) == 1){
                                 copy[r+1][c].setState(Tree.BURNING);
                             }
                         }
+                    copy[r][c].setBurnTime(copy[r][c].getBurnTime()+1);
+                    if(copy[r][c].getBurnTime()==burnDuration){
+                        copy[r][c].setState(Tree.EMPTY);
                     }
                 }
             }
@@ -105,6 +104,17 @@ public class Forest {
         // Step 4: Increase burn time of currently burning trees.
         // Step 5: Turn trees to EMPTY once burn time reaches burnDuration.
         // Step 6: Replace the current grid with the updated next-step grid.
+    }
+
+    public boolean allBurned(){
+        for(int r = 0; r<grid.length;r++){
+            for(int c = 0; c<grid[0].length;c++){
+                if(grid[r][c].getState() != Tree.EMPTY){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public double percentBurned() {
@@ -168,6 +178,14 @@ public class Forest {
     }
     public Tree[][] getGrid() {
         return grid;
+    }
+    public void printGrid(){
+        for(Tree[] t: grid){
+            for(Tree tree : t){
+                System.out.print(tree.getState() + " ");
+            }
+            System.out.println();
+        }
     }
     public double getBurnRate() { return burnRate; }
     public int getBurnDuration() { return burnDuration; }

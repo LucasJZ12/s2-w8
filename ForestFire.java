@@ -25,10 +25,19 @@ public class ForestFire {
         // Step 2: Pick one forest to run the simulation.
         //   - Choose by index.
         //   - Start at least one burning tree to begin the fire.
-        System.out.println(forests);
+        forests.get(0).getGrid()[0][0].setState(Tree.BURNING);
+        forests.get(0).printGrid();
         // Step 3: Run the simulation.
         //   - Repeat spreadFire() for a fixed number of steps (or until fire ends).
+        // while(forests.get(0).allBurned()){
+        //     forests.get(0).spreadFire();
+        // }
+        // forests.get(0).printGrid();
+        for(int i = 0; i< 2; i++){
+            forests.get(0).spreadFire();
+        }
         //   - At the end, print percentBurned() and summary stats.
+        System.out.println(forests.get(0).percentBurned());
         //   - At the end of each simulation step, you should write the current state of the Tree[][] grid to a file
 
         // Step 4: We will vibe code our way to visualization
